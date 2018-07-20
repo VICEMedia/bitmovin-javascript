@@ -60,6 +60,7 @@ export const muxings = (configuration: InternalConfiguration, encodingId: string
     ts: typeFn('ts'),
     mp4: typeFn('mp4'),
     webm: typeFn('webm'),
+    pwebm: typeFn('progressive-webm'),
 
     list: utils.buildListCallFunction<Muxing>(
       httpClient,
@@ -77,6 +78,7 @@ export interface Muxings {
   ts: any;
   mp4: any;
   webm: any;
+  pwebm: any;
 }
 
 export default (configuration: InternalConfiguration, encodingId: string): Muxings => {

@@ -17,15 +17,15 @@ describe('encoding', () => {
     beforeEach(testSetup);
     const mux = muxings(testConfiguration, 'encoding-id', mockHttp);
 
-    const testMuxing = type => {
+    const testMuxing = (type, url = type) => {
       const client = mux[type];
       describe(type, () => {
         describe('list', () => {
-          assertItCallsCorrectUrl('GET', `/v1/encoding/encodings/encoding-id/muxings/${type}`, client.list);
+          assertItCallsCorrectUrl('GET', `/v1/encoding/encodings/encoding-id/muxings/${url}`, client.list);
           assertItReturnsUnderlyingPromise(mockGet, client.list);
         });
         describe('add', () => {
-          assertItCallsCorrectUrl('POST', `/v1/encoding/encodings/encoding-id/muxings/${type}`, client.add);
+          assertItCallsCorrectUrl('POST', `/v1/encoding/encodings/encoding-id/muxings/${url}`, client.add);
           assertItReturnsUnderlyingPromise(mockPost, client.add);
         });
 
@@ -33,7 +33,7 @@ describe('encoding', () => {
           describe('details', () => {
             assertItCallsCorrectUrl(
               'GET',
-              `/v1/encoding/encodings/encoding-id/muxings/${type}/muxing-id`,
+              `/v1/encoding/encodings/encoding-id/muxings/${url}/muxing-id`,
               client('muxing-id').details
             );
             assertItReturnsUnderlyingPromise(mockGet, client('muxing-id').details);
@@ -41,7 +41,7 @@ describe('encoding', () => {
           describe('customData', () => {
             assertItCallsCorrectUrl(
               'GET',
-              `/v1/encoding/encodings/encoding-id/muxings/${type}/muxing-id/customData`,
+              `/v1/encoding/encodings/encoding-id/muxings/${url}/muxing-id/customData`,
               client('muxing-id').customData
             );
             assertItReturnsUnderlyingPromise(mockGet, client('muxing-id').details);
@@ -49,7 +49,7 @@ describe('encoding', () => {
           describe('delete', () => {
             assertItCallsCorrectUrl(
               'DELETE',
-              `/v1/encoding/encodings/encoding-id/muxings/${type}/muxing-id`,
+              `/v1/encoding/encodings/encoding-id/muxings/${url}/muxing-id`,
               client('muxing-id').delete
             );
             assertItReturnsUnderlyingPromise(mockDelete, client('muxing-id').delete);
@@ -62,6 +62,7 @@ describe('encoding', () => {
     testMuxing('mp4');
     testMuxing('ts');
     testMuxing('webm');
+    testMuxing('pwebm', 'progressive-webm');
   });
 
   describe('Muxings list all', () => {
